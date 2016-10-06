@@ -6,7 +6,7 @@ var certContent = fs.readFileSync(path.join(__dirname, 'ca_cert', 'digicert_chai
 
 module.exports = function(options) {
   var token = new Buffer(options.name + ':' + options.key).toString('base64')
-    , domain = options.domain || 'https://api.tangocard.com';
+    , domain = options.domain || 'https://integration-www.tangocard.com';
 
   var _request = function(method, uri, payload, callback) {
     if ('undefined' === typeof callback ) {
@@ -44,40 +44,68 @@ module.exports = function(options) {
   };
 
   return {
-    createAccount: function(payload, callback) {
-      return _request('POST', '/raas/v1/accounts', payload, callback);
+		getCustomers: function(callback) {
+      return _request('GET', '/raas/v2/customers', callback);
     },
 
-    getAccountInfo: function(customer, accountId, callback) {
-      return _request('GET', '/raas/v1/accounts/' + customer + '/' + accountId, callback);
+		getCustomerInfo: function(customerId, callback) {
+      return _request('GET', '/raas/v2/customers/' + customerId, callback);
     },
+
+		getAccountsByCustomer: function(customerId, callback) {
+      return _request('GET', '/raas/v2/customers/' + customerId + '/accounts', callback);
+    },
+
+		createCustomer: function(payload, callback) {
+      return _request('POST', '/raas/v2/customers', payload, callback);
+    },
+
+		createCustomerAccount: function(customerId, payload, callback) {
+			return _request('POST', '/raas/v2/customers/' + customerId + '/accounts', payload, callback);
+		},
+
+		getAccounts: function(callback) {
+      return _request('GET', '/raas/v2/accounts', callback);
+    },
+
+    getAccountInfo: function(accountId, callback) {
+      return _request('GET', '/raas/v2/accounts/' + accountId, callback);
+    },
+
+		getCreditCards: function(callback) {
+			return _request('GET', '/raas/v2/creditCards', callback);
+		}
 
     registerCreditCard: function(payload, callback) {
-      return _request('POST', '/raas/v1/cc_register', payload, callback);
+      return _request('POST', '/raas/v2/creditCards', payload, callback);
     },
 
+		getCreditCardInfo(creditCardToken, callback) {
+			return _request('GET', '/raas/v2/creditCards/' + creditCardToken, callback);
+		}
+
     fundAccount: function(payload, callback) {
-      return _request('POST', '/raas/v1/cc_fund', payload, callback);
+      return _request('POST', '/raas/v2/creditCardDeposits', payload, callback);
     },
 
     deleteCreditCard: function(payload, callback) {
-      return _request('POST', '/raas/v1/cc_unregister', payload, callback);
+      return _request('POST', '/raas/v2/creditCardUnregisters', payload, callback);
     },
 
-    getRewards: function(callback) {
-      return _request('GET', '/raas/v1/rewards', callback);
+    getCatalogs: function(callback) {
+      return _request('GET', '/raas/v2/catalogs', callback);
     },
 
     placeOrder: function(payload, callback) {
-      return _request('POST', '/raas/v1/orders', payload, callback);
+      return _request('POST', '/raas/v2/orders', payload, callback);
     },
 
     getOrderInfo: function(orderId, callback) {
-      return _request('GET', '/raas/v1/orders/' + orderId, callback);
+      return _request('GET', '/raas/v2/orders/' + orderId, callback);
     },
 
     getOrderHistory: function(qs, callback) {
-      return _request('GET', '/raas/v1/orders', qs, callback);
+      return _request('GET', '/raas/v2/orders', qs, callback);
     }
   }
 };
