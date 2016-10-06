@@ -1,13 +1,14 @@
 {
   "name": "node-tangocard",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "tangocard node.js simple sdk",
   "main": "tangocard.js",
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha -R spec --timeout 30000"
   },
   "contributors": [
-    "Igor Skrynkovskyy <skrynkovskyy@gmail.com>"
+    "Igor Skrynkovskyy <skrynkovskyy@gmail.com>",
+		"Den Odell <denodell@me.com>"
   ],
   "repository": {
     "type": "git",

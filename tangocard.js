@@ -74,7 +74,7 @@ module.exports = function(options) {
 
 		getCreditCards: function(callback) {
 			return _request('GET', '/raas/v2/creditCards', callback);
-		}
+		},
 
     registerCreditCard: function(payload, callback) {
       return _request('POST', '/raas/v2/creditCards', payload, callback);
@@ -82,7 +82,7 @@ module.exports = function(options) {
 
 		getCreditCardInfo(creditCardToken, callback) {
 			return _request('GET', '/raas/v2/creditCards/' + creditCardToken, callback);
-		}
+		},
 
     fundAccount: function(payload, callback) {
       return _request('POST', '/raas/v2/creditCardDeposits', payload, callback);
