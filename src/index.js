@@ -7,7 +7,7 @@ const ca = fs.readFileSync(path.join(__dirname, '../ca_cert', 'digicert_chain.pe
 
 export default class TangoCard {
 	token = ''
-	domain = 'https://integration-www.tangocard.com'
+	domain = 'https://api.tangocard.com'
 
 	constructor(options) {
 		const { name, key, domain = this.domain } = options
