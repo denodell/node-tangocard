@@ -130,8 +130,8 @@ var TangoCard = function () {
 					throw new Error('API Response is empty');
 				}
 
-				if (false === body.success && 'string' === typeof body.error_message) {
-					throw new Error(body.error_message);
+				if (body.errors && body.errors.length > 0) {
+					throw new Error(body.errors.join('. '));
 				}
 
 				return body;
