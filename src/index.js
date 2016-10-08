@@ -41,6 +41,8 @@ export default class TangoCard {
 			}
 
 			return body
+		}).catch(err => {
+			return err.error
 		})
 	}
 
