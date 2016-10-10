@@ -125,16 +125,24 @@ var TangoCard = function () {
 				}
 			};
 
-			return (0, _requestPromise2.default)(options).then(function (body) {
-				if (!body) {
-					throw new Error('API Response is empty');
-				}
+			return new Promise(function (resolve, reject) {
+				try {
+					(0, _requestPromise2.default)(options).then(function (body) {
+						if (!body) {
+							return reject('API Response is empty');
+						}
 
-				if (body.errors && body.errors.length > 0) {
-					throw new Error(body.errors.join('. '));
-				}
+						if (body.errors && body.errors.length > 0) {
+							return reject(body.errors.join('. '));
+						}
 
-				return body;
+						return resolve(body);
+					}).catch(function (err) {
+						reject(err.error);
+					});
+				} catch (err) {
+					reject(err.error);
+				}
 			});
 		}
 	}]);

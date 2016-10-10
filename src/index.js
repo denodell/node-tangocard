@@ -34,7 +34,6 @@ export default class TangoCard {
 		return new Promise((resolve, reject) => {
 			try {
 				request(options).then(body => {
-					console.log("REQUEST PASSED", body.errors)
 					if (!body) {
 						return reject('API Response is empty')
 					}
@@ -45,15 +44,9 @@ export default class TangoCard {
 
 					return resolve(body)
 				}).catch(err => {
-					console.log("REQUEST ERRORED", err.error)
 					reject(err.error)
 				})
 			} catch(err) {
-				console.log("REQUEST TRY/CATCH ERRORS", err)
-				if (err.errors && err.errors.length > 0) {
-					return reject(err.errors.join('. '))
-				}
-
 				reject(err.error)
 			}
 		})
