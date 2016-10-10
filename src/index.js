@@ -48,14 +48,14 @@ export default class TangoCard {
 						return reject(err.errors.join('. '))
 					}
 
-					reject(err)
+					reject(err.error)
 				})
 			} catch(err) {
 				if (err.errors && err.errors.length > 0) {
 					return reject(err.errors.join('. '))
 				}
 
-				reject(err)
+				reject(err.error)
 			}
 		})
 	}
