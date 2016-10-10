@@ -31,16 +31,24 @@ export default class TangoCard {
 			},
 		}
 
-		return request(options).then(body => {
-			if (!body) {
-				throw new Error('API Response is empty')
-			}
+		return new Promise((resolve, reject) => {
+			request(options).then(body => {
+				if (!body) {
+					return reject('API Response is empty')
+				}
 
-			if (body.errors && body.errors.length > 0) {
-				throw new Error(body.errors.join('. '))
-			}
+				if (body.errors && body.errors.length > 0) {
+					return reject(body.errors.join('. '))
+				}
 
-			return body
+				return resolve(body)
+			}).catch(err => {
+				if (err.errors && err.errors.length > 0) {
+					return reject(err.errors.join('. '))
+				}
+
+				reject(err)
+			})
 		})
 	}
 
