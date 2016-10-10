@@ -32,23 +32,31 @@ export default class TangoCard {
 		}
 
 		return new Promise((resolve, reject) => {
-			request(options).then(body => {
-				if (!body) {
-					return reject('API Response is empty')
-				}
+			try {
+				request(options).then(body => {
+					if (!body) {
+						return reject('API Response is empty')
+					}
 
-				if (body.errors && body.errors.length > 0) {
-					return reject(body.errors.join('. '))
-				}
+					if (body.errors && body.errors.length > 0) {
+						return reject(body.errors.join('. '))
+					}
 
-				return resolve(body)
-			}).catch(err => {
+					return resolve(body)
+				}).catch(err => {
+					if (err.errors && err.errors.length > 0) {
+						return reject(err.errors.join('. '))
+					}
+
+					reject(err)
+				})
+			} catch(err) {
 				if (err.errors && err.errors.length > 0) {
 					return reject(err.errors.join('. '))
 				}
 
 				reject(err)
-			})
+			}
 		})
 	}
 
