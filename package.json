@@ -1,6 +1,6 @@
 {
   "name": "node-tangocard",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "TangoCard Node.js Simple SDK",
   "main": "dist/index.js",
   "scripts": {
